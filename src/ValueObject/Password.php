@@ -2,8 +2,9 @@
 
 namespace App\ValueObject;
 
-use App\Exceptions\ValueObjects\Email\EmptyPasswordException;
-use App\Exceptions\ValueObjects\Email\InvalidPasswordException;
+use App\Exceptions\ValueObjects\Password\EmptyPasswordException;
+use App\Exceptions\ValueObjects\Password\InvalidPasswordException;
+use App\Services\User\Password\IsPasswordComplexEnoughService;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]
@@ -36,11 +37,7 @@ class Password
 
     private function isComplexEnough(string $password): bool
     {
-        if (mb_strlen($password) < 8) {
-            return false;
-        }
-
-        return true;
+        return IsPasswordComplexEnoughService::isComplexEnough($password);
     }
 
     public function setPassword(string $password): void

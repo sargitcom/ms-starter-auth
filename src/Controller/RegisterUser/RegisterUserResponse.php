@@ -3,6 +3,7 @@
 namespace App\Controller\RegisterUser;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterUserResponse extends JsonResponse
 {
@@ -14,11 +15,19 @@ class RegisterUserResponse extends JsonResponse
         );
     }
 
+    public static function createFromPasswordNotComplexEnough(): self
+    {
+        return new self(
+            ['password' => 'not_complex_enough'],
+            Response::HTTP_BAD_REQUEST,
+        );
+    }
+
     public static function createFromSuccess(): self
     {
         return new self(
             ['msg' => 'user_registered'],
-            JsonResponse::HTTP_OK
+            Response::HTTP_OK
         );
     }
 }

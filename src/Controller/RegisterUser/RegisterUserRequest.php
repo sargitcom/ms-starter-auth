@@ -30,7 +30,7 @@ class RegisterUserRequest
             $errors['email'] = "invalid_email_address";
         }
 
-        if ($this->getEmail() === "") {
+        if ($this->getPassword() === "") {
             $errors['password'] = "invalid_password";
         }
 
