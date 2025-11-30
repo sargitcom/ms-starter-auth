@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\ValueObjects\Email;
+namespace App\Entity\ValueObject\Email;
 
 use InvalidArgumentException;
 

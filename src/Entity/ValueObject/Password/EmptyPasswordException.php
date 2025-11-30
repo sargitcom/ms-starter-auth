@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\ValueObjects\Password;
+namespace App\Entity\ValueObject\Password;
 
 use InvalidArgumentException;
 

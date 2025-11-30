@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\ValueObject\Email;
+use App\Entity\ValueObject\Password;
 use App\Repository\UserRepository;
-use App\ValueObject\Email;
-use App\ValueObject\Password;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -14,7 +14,6 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

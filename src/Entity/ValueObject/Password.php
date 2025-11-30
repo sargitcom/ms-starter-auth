@@ -1,9 +1,9 @@
 <?php
 
-namespace App\ValueObject;
+namespace App\Entity\ValueObject;
 
-use App\Exceptions\ValueObjects\Password\EmptyPasswordException;
-use App\Exceptions\ValueObjects\Password\InvalidPasswordException;
+use App\Entity\ValueObject\Password\EmptyPasswordException;
+use App\Entity\ValueObject\Password\InvalidPasswordException;
 use App\Services\User\Password\IsPasswordComplexEnoughService;
 use Doctrine\ORM\Mapping as ORM;
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\ValueObject;
+namespace App\Entity\ValueObject;
 
-use App\Exceptions\ValueObjects\Email\EmptyPasswordException;
-use App\Exceptions\ValueObjects\Email\InvalidPasswordException;
+use App\Entity\ValueObject\Email\EmptyEmailAddressException;
+use App\Entity\ValueObject\Email\InvalidEmailAddressException;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]
 class Email
 {
-    #[ORM\Column(type: "string")]
+    #[ORM\Column(type: "string", length: 320, unique: true, nullable: false)]
     private string $email;
 
     public function __construct(string $email)
@@ -29,9 +29,9 @@ class Email
             return;
         }
 
-        if ($email === "") {throw new EmptyPasswordException();}
+        if ($email === "") {throw new EmptyEmailAddressException();}
 
-        throw new InvalidPasswordException($email);
+        throw new InvalidEmailAddressException($email);
     }
 
     public function setEmail(string $email): void
