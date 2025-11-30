@@ -16,6 +16,8 @@ services:
       start_period: 60s
     volumes:
       - ms_starter_auth_database_data:/var/lib/postgresql/data:rw
+    networks:
+      - ms-starter-network
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
@@ -43,6 +45,8 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
+    links:
+      - ms-starter-auth-database
     networks:
       - ms-starter-network
 
