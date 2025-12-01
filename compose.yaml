@@ -45,7 +45,6 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-      - ./docker/php-fpm/config:/usr/local/etc/php
     links:
       - ms-starter-auth-database
     networks:
