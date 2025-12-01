@@ -22,4 +22,10 @@ class UserOutboxRepository extends ServiceEntityRepository
         $em = $this->getEntityManager();
         $em->persist($userOutbox);
     }
+
+    public function remove(UserOutbox $userOutbox): void
+    {
+        $em = $this->getEntityManager();
+        $em->remove($userOutbox);
+    }
 }
