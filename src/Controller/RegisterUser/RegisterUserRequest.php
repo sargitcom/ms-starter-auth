@@ -2,6 +2,7 @@
 
 namespace App\Controller\RegisterUser;
 
+use App\Services\User\Password\IsPasswordComplexEnoughService;
 use Symfony\Component\HttpFoundation\Request;
 
 class RegisterUserRequest
@@ -15,7 +16,11 @@ class RegisterUserRequest
 
     public function isValid(): bool
     {
-        if ($this->getEmail() !== "" && $this->getPassword() !== "") {
+        if (
+            $this->getEmail() !== "" &&
+            $this->getPassword() !== "" &&
+            IsPasswordComplexEnoughService::isComplexEnough($this->getPassword())
+        ) {
             return true;
         }
 
@@ -32,6 +37,10 @@ class RegisterUserRequest
 
         if ($this->getPassword() === "") {
             $errors['password'] = "invalid_password";
+        }
+
+        if (IsPasswordComplexEnoughService::isComplexEnough($this->getPassword()) === false) {
+            $errors['password'] = "password_not_complex_enough";
         }
 
         return $errors;

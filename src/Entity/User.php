@@ -34,6 +34,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Embedded(class: Password::class)]
     private Password $password;
 
+    public function __construct(Uuid $id, Email $email, Password $password, array $roles = [])
+    {
+        $this->id = $id;
+        $this->email = $email;
+        $this->password = $password;
+        $this->roles = $roles;
+    }
+
     public function getId(): ?Uuid
     {
         return $this->id;

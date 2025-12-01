@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\ValueObject\Password;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -19,6 +20,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
+    public function persist(User $user): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($user);
+    }
+
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
@@ -28,9 +35,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
         }
 
-        $user->setPassword($newHashedPassword);
+        $user->setPassword(Password::create($newHashedPassword));
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+    }
+
+    public function getByEmail(string $email): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email.email = :email')
+            ->setParameter(':email', $email)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     //    /**

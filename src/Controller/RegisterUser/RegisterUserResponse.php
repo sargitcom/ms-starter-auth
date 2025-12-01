@@ -15,11 +15,19 @@ class RegisterUserResponse extends JsonResponse
         );
     }
 
-    public static function createFromPasswordNotComplexEnough(): self
+    public static function createFromUnknownError(): self
     {
         return new self(
-            ['password' => 'not_complex_enough'],
-            Response::HTTP_BAD_REQUEST,
+            ['msg' => 'unknown_error'],
+            500,
+        );
+    }
+
+    public static function createUserExists(): self
+    {
+        return new self(
+            ['msg' => 'user_already_registered'],
+            Response::HTTP_BAD_REQUEST
         );
     }
 
@@ -31,3 +39,4 @@ class RegisterUserResponse extends JsonResponse
         );
     }
 }
+
