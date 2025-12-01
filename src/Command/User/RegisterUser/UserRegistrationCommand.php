@@ -26,7 +26,6 @@ class UserRegistrationCommand
         private UserOutboxRepository $outboxRepository
     ) {}
 
-
     public function __invoke(): int
     {
         try {
