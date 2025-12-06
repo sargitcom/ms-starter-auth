@@ -13,6 +13,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 use Throwable;
 
@@ -23,6 +24,7 @@ class RegisterUserService
         private EntityManagerInterface $entityManager,
         private UserRepository $userRepository,
         private UserOutboxRepository $userOutboxRepository,
+        private UserPasswordHasherInterface $userPasswordHasher,
     ) {}
 
     public function registerUser(RegisterUserRequest $request): RegisterUserResponse
@@ -75,11 +77,14 @@ class RegisterUserService
         $email = new Email($request->getEmail());
         $password = new Password($request->getPassword());
 
-        return new User(
+        $user = new User(
             $userId,
             $email,
             $password,
         );
+        $user->setPassword(new Password($this->userPasswordHasher->hashPassword($user, $request->getPassword())));
+
+        return $user;
     }
 
     private function createUserOutbox(User $user): UserOutbox

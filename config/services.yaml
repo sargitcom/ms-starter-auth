@@ -23,7 +23,17 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    # register user
+
     App\Controller\RegisterUser\RegisterUserRequestFactory: ~
 
     App\Controller\RegisterUser\RegisterUserRequest:
         factory: ['@App\Controller\RegisterUser\RegisterUserRequestFactory', 'create']
+
+
+    # password reset
+
+    App\Controller\ResetPassword\ResetUserPasswordRequestFactory: ~
+
+    App\Controller\ResetPassword\ResetUserPasswordRequest:
+        factory: ['@App\Controller\ResetPassword\ResetUserPasswordRequestFactory', 'create']

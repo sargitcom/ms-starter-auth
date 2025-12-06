@@ -13,7 +13,7 @@ framework:
             # Route your messages to the transports
             'Symfony\Component\Mailer\Messenger\SendEmailMessage': async
 
-            'App\Message\User\RegisterUserMessage': async
+            'App\Message\User\UserRegisteredEvent': async
 
 # when@test:
 #    framework:

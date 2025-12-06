@@ -4,7 +4,7 @@ namespace App\Command\User\RegisterUser;
 
 use App\Entity\User;
 use App\Entity\UserOutbox;
-use App\Message\User\RegisterUserMessage;
+use App\Message\User\UserRegisteredEvent;
 use App\Repository\UserOutboxRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,7 +35,6 @@ class UserRegistrationCommand
             }
             return Command::SUCCESS;
         } catch (Throwable $e) {
-            var_dump($e->getMessage());
             $this->logger->error($e->getMessage());
             return Command::FAILURE;
         }
@@ -55,7 +54,7 @@ class UserRegistrationCommand
                 return;
             }
 
-            $this->messageBus->dispatch(new RegisterUserMessage(
+            $this->messageBus->dispatch(new UserRegisteredEvent(
                 $user->getId()->toString(),
                 $user->getEmail(),
                 $user->getPassword()

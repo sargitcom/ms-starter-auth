@@ -2,7 +2,7 @@
 
 namespace App\Message\User;
 
-class RegisterUserMessage
+class UserRegisteredEvent
 {
     public function __construct(
         private string $userId,
